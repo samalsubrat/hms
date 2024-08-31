@@ -1,7 +1,8 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify
 import pickle
 import numpy as np
 from prediction import predict_disease, specialist_assign
+from chatbot import generate_response
 
 app = Flask(__name__)
 
@@ -19,6 +20,8 @@ def predict():
         "disease": predicted_disease,
         "specialist": recommended_specialist
     }
+    
+    return jsonify(response)
     
 @app.route('/chat',methods=['POST'])
 def chat():
