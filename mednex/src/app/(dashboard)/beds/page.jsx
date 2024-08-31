@@ -37,7 +37,6 @@ import {
   FilterIcon,
   MoreVerticalIcon,
   BedIcon,
-  MapPinIcon,
   DollarSignIcon,
   ActivityIcon,
 } from "lucide-react";
