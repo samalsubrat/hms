@@ -29,7 +29,8 @@ model = genai.GenerativeModel(
         personal opinions, or unrelated topics. If a question is not relevant 
         to medicine, kindly reply with, 'I can only assist with medical-related 
         inquiries.' Ensure that all your responses are concise, evidence-based, 
-        and aligned with current medical guidelines.
+        and aligned with current medical guidelines. 
+        Elaborate every point of every answer as much as possible.
     '''
 )
 
