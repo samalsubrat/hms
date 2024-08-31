@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from flask import Flask, request, jsonify, render_template
 import pickle
 import numpy as np
@@ -27,6 +28,23 @@ def predict():
         "specialist": recommended_specialist
     }
     
+=======
+from flask import Flask, request, jsonify
+from chatbot import generate_response
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return 'Hello, World!'
+
+@app.route('/chat',methods=['POST'])
+def chat():
+    data=request.get_json()
+    question=data.get('question','')
+    
+    response=generate_response(question)
+>>>>>>> c0b3fe08f65977998332087af17a411454dfd3e7
     return jsonify(response)
 
 if __name__ == '__main__':
