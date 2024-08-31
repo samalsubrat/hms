@@ -370,3 +370,24 @@ export const staff = [
     phoneNumber: "9876543234",
   },
 ];
+
+export const reports = [
+  { id: 1, patientName: "John Doe", patientId: "P001", type: "Blood Test", testName: "Complete Blood Count", date: "2023-06-01", status: "Completed", result: "Normal" },
+  { id: 2, patientName: "Jane Smith", patientId: "P002", type: "Scan", testName: "CT Scan - Chest", date: "2023-06-02", status: "Pending", result: "Awaiting" },
+  { id: 3, patientName: "Bob Johnson", patientId: "P003", type: "Blood Test", testName: "Lipid Panel", date: "2023-06-03", status: "Completed", result: "Abnormal" },
+  { id: 4, patientName: "Alice Brown", patientId: "P004", type: "Scan", testName: "MRI - Brain", date: "2023-06-04", status: "In Progress", result: "Awaiting" },
+  { id: 5, patientName: "Charlie Davis", patientId: "P005", type: "Blood Test", testName: "Thyroid Function", date: "2023-06-05", status: "Completed", result: "Normal" },
+  { id: 6, patientName: "Eva Wilson", patientId: "P006", type: "Scan", testName: "X-Ray - Chest", date: "2023-06-06", status: "Completed", result: "Abnormal" },
+  { id: 7, patientName: "Frank Miller", patientId: "P007", type: "Blood Test", testName: "Liver Function", date: "2023-06-07", status: "Pending", result: "Awaiting" },
+  { id: 8, patientName: "Grace Taylor", patientId: "P008", type: "Scan", testName: "Ultrasound - Abdomen", date: "2023-06-08", status: "Completed", result: "Normal" },
+]
+export const medications = [
+  { id: 1, name: "Aspirin", batchNumber: "ASP20230601", quantity: 5000, expiryDate: "2024-06-01", supplier: "PharmaCorp", status: "In Stock" },
+  { id: 2, name: "Amoxicillin", batchNumber: "AMX20230515", quantity: 2000, expiryDate: "2024-05-15", supplier: "MediPharm", status: "Low Stock" },
+  { id: 3, name: "Lisinopril", batchNumber: "LIS20230420", quantity: 3000, expiryDate: "2025-04-20", supplier: "HealthDrugs", status: "In Stock" },
+  { id: 4, name: "Metformin", batchNumber: "MET20230710", quantity: 4000, expiryDate: "2024-07-10", supplier: "Diabetescare", status: "In Stock" },
+  { id: 5, name: "Simvastatin", batchNumber: "SIM20230825", quantity: 1500, expiryDate: "2024-08-25", supplier: "HeartHealth", status: "Low Stock" },
+  { id: 6, name: "Omeprazole", batchNumber: "OMP20230930", quantity: 2500, expiryDate: "2024-09-30", supplier: "GastroMed", status: "In Stock" },
+  { id: 7, name: "Levothyroxine", batchNumber: "LEV20231105", quantity: 3500, expiryDate: "2025-11-05", supplier: "ThyroidCare", status: "In Stock" },
+  { id: 8, name: "Amlodipine", batchNumber: "AML20231220", quantity: 1800, expiryDate: "2024-12-20", supplier: "CardioPharm", status: "Low Stock" },
+]
