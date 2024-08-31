@@ -16,7 +16,7 @@ export default function PatientDashboard() {
           return;
         }
 
-        const response = await fetch("/api/patient-data", {
+        const response = await fetch("/api/patient/data", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

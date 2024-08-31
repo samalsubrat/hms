@@ -2,7 +2,7 @@ import { CalendarIcon, PillIcon, FileTextIcon, VideoIcon } from "lucide-react";
 
 // export let role = "admin"; admin,doctors,staff,patient,lab,pharmacy
 
-export let role = "admin";
+export let role = "doctors";
 
 export const hospitalCode = "AI";
 

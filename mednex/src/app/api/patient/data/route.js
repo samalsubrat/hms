@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { doc, getDoc } from "firebase/firestore";
 import jwt from "jsonwebtoken";
-import { db } from "../../../firebase/firebaseConfig";
+import { db } from "../../../../firebase/firebaseConfig";
 
 export async function GET(request) {
   try {

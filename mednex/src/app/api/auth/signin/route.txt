@@ -11,6 +11,7 @@ import {
   pharmacists,
   hospitalCode,
 } from "../../../../lib/data.js";
+import { redirect } from "next/dist/server/api-utils";
 
 export async function POST(request) {
   try {
@@ -18,13 +19,6 @@ export async function POST(request) {
     let userRole = "";
     let userId = "";
     let redirectUrl = "";
-    let doctorName = "";
-    let speciality = "";
-    let name = "";
-    let department = "";
-    let yearOfJoining = "";
-    let phoneNo = "";
-    let role = "";
 
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -95,24 +89,6 @@ export async function POST(request) {
         userRole = user.role;
         userId = user.id;
         redirectUrl = `/dashboard`;
-
-        // Store relevant details based on role
-        if (userRole === "doctor") {
-          doctorName = user.doctorName;
-          speciality = user.speciality;
-        } else if (userRole === "staff") {
-          name = user.name;
-          role = user.role;
-          department = user.department;
-          yearOfJoining = user.yearOfJoining;
-          phoneNo = user.phoneNo;
-        } else if (userRole === "labtech") {
-          name = user.name;
-          role = user.role;
-        } else if (userRole === "pharmacist") {
-          name = user.name;
-          role = user.role;
-        }
       } else {
         return NextResponse.json(
           { error: "Invalid email or code." },
@@ -133,12 +109,6 @@ export async function POST(request) {
         role: userRole,
         token,
         redirectUrl,
-        doctorName,
-        speciality,
-        name,
-        department,
-        yearOfJoining,
-        phoneNo,
       },
       { status: 200 }
     );

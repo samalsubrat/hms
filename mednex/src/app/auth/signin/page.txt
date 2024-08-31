@@ -23,24 +23,25 @@ export default function SignIn() {
 
       if (response.ok) {
         localStorage.setItem("authToken", result.token);
-        localStorage.setItem("usertype", result.role);
 
-        if (result.role === "doctor") {
-          localStorage.setItem("doctorName", result.doctorName);
-          localStorage.setItem("speciality", result.speciality);
-        } else if (result.role === "staff") {
-          localStorage.setItem("staffName", result.name);
-          localStorage.setItem("role", result.role);
-          localStorage.setItem("department", result.department);
-          localStorage.setItem("yearOfJoining", result.yearOfJoining);
-          localStorage.setItem("phoneNo", result.phoneNo);
-          localStorage.setItem("email", result.email);
-        } else if (result.role === "labtech") {
-          localStorage.setItem("labtechName", result.name);
-          localStorage.setItem("role", result.role);
-        } else if (result.role === "pharmacist") {
-          localStorage.setItem("pharmacistName", result.name);
-          localStorage.setItem("role", result.role);
+        switch (result.role) {
+          case "patient":
+            localStorage.setItem("usertype", "patient");
+            break;
+          case "doctor":
+            localStorage.setItem("usertype", "doctors");
+            break;
+          case "staff":
+            localStorage.setItem("usertype", "staff");
+            break;
+          case "lab":
+            localStorage.setItem("usertype", "lab");
+            break;
+          case "pharmacy":
+            localStorage.setItem("usertype", "pharmacy");
+            break;
+          default:
+            console.error("Unknown user role:", result.role);
         }
 
         setMessage(result.message);
