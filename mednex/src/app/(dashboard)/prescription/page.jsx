@@ -365,7 +365,7 @@ function MainComponent() {
           </div>
         ))}
         <button
-          className="bg-blue-500 text-white py-2 px-4 rounded"
+          className="bg-green-main text-white py-2 px-4 rounded"
           onClick={addChiefComplaint}
         >
           Add Chief Complaint
@@ -405,7 +405,7 @@ function MainComponent() {
             <Input
               type="text"
               placeholder="Search diagnoses..."
-              className="border-2 p-2 w-full"
+              className="border-2 p-2 w-full my-2"
               value={diagnosisSearchQuery}
               onChange={handleDiagnosisSearchChange}
             />
@@ -455,7 +455,7 @@ function MainComponent() {
           </div>
         ))}
         <button
-          className="bg-blue-500 text-white py-2 px-4 rounded"
+          className="bg-green-main text-white py-2 px-4 rounded"
           onClick={addDiagnosis}
         >
           Add Diagnosis
@@ -469,7 +469,7 @@ function MainComponent() {
             <Input
               type="text"
               placeholder="Search medications..."
-              className="border-2 p-2 w-full"
+              className="border-2 p-2 my-2 w-full"
               value={medicationSearchQuery}
               onChange={handleMedicationSearchChange}
             />
@@ -542,7 +542,7 @@ function MainComponent() {
           </div>
         ))}
         <button
-          className="bg-blue-500 text-white py-2 px-4 rounded"
+          className="bg-green-main text-white py-2 px-4 rounded"
           onClick={addMedication}
         >
           Add Medication
@@ -553,7 +553,7 @@ function MainComponent() {
         <button
           type="button"
           onClick={handleGeneratePDF}
-          className="bg-blue-500 text-white py-2 px-4 rounded"
+          className="bg-green-main text-white py-2 px-4 rounded"
         >
           Generate PDF
         </button>
