@@ -45,7 +45,7 @@ function App() {
       formData.append("fileUploaded", userInput.fileUploaded);
       formData.append("fileDoubt", userInput.fileDoubt);
 
-      fetch("http://127.0.0.1:5000/generate", {
+      fetch("http://127.0.0.1:5000/summarize", {
         method: "POST",
         body: formData,
       })
