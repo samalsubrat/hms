@@ -40,12 +40,18 @@ import {
   DollarSignIcon,
   ActivityIcon,
 } from "lucide-react";
-import { role, beds } from "@/lib/data";
+import { beds } from "@/lib/data";
+import { getRole } from "@/app/sign-in/role";
+
 
 export default function Component() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("all");
-
+    const [role, setRole] = useState(null);
+useEffect(() => {
+    // Retrieve the role from localStorage only on the client side
+    setRole(getRole());
+  }, []);
   const filteredBeds = beds.filter(
     (bed) =>
       (bed.type.toLowerCase().includes(searchTerm.toLowerCase()) ||

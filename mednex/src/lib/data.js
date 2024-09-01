@@ -1,10 +1,17 @@
 import { CalendarIcon, PillIcon, FileTextIcon, VideoIcon } from "lucide-react";
 
 // export let role = "admin"; admin,doctors,staff,patient,lab,pharmacy
+export const users = [
+  { email: "admin@example.com", role: "admin" },
+  { email: "doctor@example.com", role: "doctor" },
+  { email: "staff@example.com", role: "staff" },
+  { email: "patient@example.com", role: "patient" },
+  { email: "lab@example.com", role: "lab" },
+  { email: "pharmacy@example.com", role: "pharmacy" },
+];
 
-export let role = "admin";
 
-export const hospitalCode = "AI";
+export const hospitalCode = "SU";
 
 export const superAdminCode = "SA";
 export const staffCode = "ST";

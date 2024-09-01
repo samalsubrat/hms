@@ -31,9 +31,15 @@ import {
   CalendarIcon,
   PlusIcon
 } from "lucide-react";
-import { role, reports } from "@/lib/data";
+import { reports } from "@/lib/data";
+import { getRole } from "@/app/sign-in/role";
 
 export default function Component() {
+    const [role, setRole] = useState(null);
+useEffect(() => {
+    // Retrieve the role from localStorage only on the client side
+    setRole(getRole());
+  }, []);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("all");
 

@@ -46,8 +46,15 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { medications } from "@/lib/data";
+import { getRole } from "@/app/sign-in/role";
 
 export default function Component() {
+    const [role, setRole] = useState(null);
+useEffect(() => {
+    // Retrieve the role from localStorage only on the client side
+    setRole(getRole());
+  }, []);
   const [searchTerm, setSearchTerm] = useState("");
   const [Name, setName] = useState("");
   const [batch, setBatch] = useState("");

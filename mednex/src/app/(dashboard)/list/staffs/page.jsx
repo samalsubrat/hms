@@ -10,10 +10,17 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { staff, role } from "@/lib/data";
+import { staff} from "@/lib/data";
 import Link from "next/link";
+import { getRole } from "@/app/sign-in/role";
+
 
 const StaffDashboard = () => {
+    const [role, setRole] = useState(null);
+useEffect(() => {
+    // Retrieve the role from localStorage only on the client side
+    setRole(getRole());
+  }, []);
   const [cards, setCards] = useState([]);
   const [editingCardId, setEditingCardId] = useState(null);
   const [editableContent, setEditableContent] = useState({

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect,useState } from "react";
 import { Button } from "../../../components/ui/button";
 import {
   LayoutDashboardIcon,
@@ -14,9 +14,9 @@ import {
   Hospital,
   XIcon,
   CalendarDays,
-  VideoIcon, 
+  VideoIcon,
   Tablets,
-  Bed
+  Bed,
 } from "lucide-react";
 
 import {
@@ -26,7 +26,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-import { role } from "@/lib/data";
+import { getRole } from "@/app/sign-in/role";
 
 const sidebarItems = [
   {
@@ -34,83 +34,93 @@ const sidebarItems = [
     label: "Dashboard",
     icon: LayoutDashboardIcon,
     visible: ["admin", "doctors", "staff", "patient", "lab", "pharmacy"],
-    href:"/dashboard",
+    href: "/dashboard",
   },
   {
     id: "patients",
     label: "Patients",
     icon: UserIcon,
     visible: ["admin", "doctors", "staff", "lab", "pharmacy"],
-    href:"/list/patients",
+    href: "/list/patients",
   },
   {
     id: "doctors",
     label: "Doctors",
     icon: StethoscopeIcon,
     visible: ["admin", "doctors", "staff", "lab", "pharmacy", "patients"],
-    href:"/list/doctors",
+    href: "/list/doctors",
   },
   {
     id: "staffs",
     label: "Staffs",
     icon: Hospital,
     visible: ["admin", "staff", "pharmacy"],
-    href:"/list/staffs",
+    href: "/list/staffs",
   },
   {
     id: "billing",
     label: "Billing",
     icon: CreditCard,
     visible: ["admin", "staff", "pharmacy"],
-    href:"/billing",
+    href: "/billing",
   },
   {
     id: "appointments",
     label: "Appointments",
     icon: CalendarDays,
     visible: ["admin", "doctors", "staff", "patient"],
-    href:"/appointments",
+    href: "/appointments",
   },
   {
     id: "consultations",
     label: "Consultations",
     icon: PillIcon,
     visible: ["admin", "doctors", "staff", "lab", "pharmacy", "patient"],
-    href:"/consultations",
+    href: "/consultations",
   },
   {
     id: "reports",
     label: "Reports",
     icon: FileTextIcon,
     visible: ["admin", "doctors", "staff", "lab", "patient"],
-    href:"/reports",
+    href: "/reports",
   },
   {
     id: "pharmacy",
     label: "Pharmacy",
     icon: Tablets,
     visible: ["admin", "doctors", "staff", "lab", "pharmacy"],
-    href:"/pharmacy",
+    href: "/pharmacy",
   },
   {
     id: "bed",
     label: "Beds",
     icon: Bed,
     visible: ["admin", "doctors", "staff"],
-    href:"/beds",
+    href: "/beds",
   },
   {
     id: "video",
     label: "Video Consultation",
     icon: VideoIcon,
     visible: ["admin", "doctors", "staff", "lab", "pharmacy", "patient"],
-    href:"/video",
+    href: "/video",
   },
 ];
+
+function signOut() {
+  localStorage.removeItem("userRole");
+  window.location.href = "/sign-in"; // Redirect to sign-in page
+}
 
 export default function Sidebar() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
+  const [role, setRole] = useState(null);
+  useEffect(() => {
+    // Retrieve the role from localStorage only on the client side
+    setRole(getRole());
+  }, []);
 
   return (
     <>
@@ -136,7 +146,7 @@ export default function Sidebar() {
               } `}
               style={{ transitionProperty: "opacity, transform" }}
             >
-              Trelix
+              Mednex
             </h2>
             <Button
               className={`max-lg:p-3 p-2 transition-all duration-300 ${
@@ -205,17 +215,13 @@ export default function Sidebar() {
                 "flex items-center gap-2 w-full border border-gray-200 py-2 px-4  rounded-xl mt-auto"
               }  ${!sidebarExpanded && "px-2 border-0 flex justify-center"} `}
             >
-              <div
-                className={`size-4 rounded-full bg-red-400  ${
-                  !sidebarExpanded && "mr-0 size-6"
-                }`}
-              />
-              <div className={`${!sidebarExpanded && "hidden"}`}>Profile</div>
+              <Button onClick={signOut}>
+              
+              <div className={`${!sidebarExpanded && "hidden"}`}>Sign Out</div>
+              </Button>
             </div>
           </aside>
         </div>
-
-       
       </div>
 
       {/* Button in the top right corner */}
@@ -223,6 +229,7 @@ export default function Sidebar() {
         <Button
           className="lg:hidden p-4 transition-all duration-300"
           onClick={() => setSidebarExpanded(!sidebarExpanded)}
+          variants="outline"
         >
           {sidebarExpanded ? (
             <XIcon className="h-6 w-6" />
