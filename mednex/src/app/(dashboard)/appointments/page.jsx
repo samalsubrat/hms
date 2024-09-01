@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -10,11 +12,71 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-const page = () => {
+const ScheduleAppointment = () => {
+  const [doctor, setDoctor] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [appointments, setAppointments] = useState([]);
+
+  useEffect(() => {
+    // Fetch upcoming appointments for the logged-in patient
+    const fetchAppointments = async () => {
+      try {
+        const response = await fetch("/api/patient/appointments");
+        const result = await response.json();
+
+        if (response.ok) {
+          setAppointments(result.appointments || []);
+        } else {
+          console.error("Failed to fetch appointments:", result.error);
+        }
+      } catch (err) {
+        console.error("An error occurred while fetching appointments:", err);
+      }
+    };
+
+    fetchAppointments();
+  }, []);
+
+  const handleScheduleAppointment = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      const patientId = "TxrbQhZ5W6g42qkYUzWZvl7xORw1"; 
+
+      const response = await fetch("/api/patient/set-appointment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ patientId, doctor, date, time }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSuccess(result.message || "Appointment scheduled successfully!");
+        setAppointments([...appointments, { doctor, date, time }]);
+      } else {
+        setError(result.error || "Failed to schedule appointment.");
+      }
+    } catch (err) {
+      setError("An error occurred while scheduling the appointment.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="space-y-4">
-      <h2 className="text-2xl font-bold text-green-dark">Appointments</h2>
-      <div className="grid gap-4 md:grid-cols-2">
+    <div className="space-y-6">
+      <h2 className="text-3xl font-extrabold text-green-dark">Appointments</h2>
+      <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle className="text-green-dark">
@@ -23,32 +85,28 @@ const page = () => {
             <CardDescription>Choose a doctor and time slot</CardDescription>
           </CardHeader>
           <CardContent>
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleScheduleAppointment}>
               <div className="space-y-2">
                 <Label htmlFor="doctor">Select Doctor</Label>
                 <select
                   id="doctor"
                   className="w-full rounded-md border border-green-secondary p-2"
+                  value={doctor}
+                  onChange={(e) => setDoctor(e.target.value)}
+                  required
                 >
+                  <option value="" disabled>
+                    -- Select a Doctor --
+                  </option>
                   {[
                     { doctor: "Dr. Arjun Patel", time: "12 years" },
                     { doctor: "Dr. Neha Sharma", time: "8 years" },
                     { doctor: "Dr. Rohan Iyer", time: "15 years" },
-                    { doctor: "Dr. Priya Gupta", time: "10 years" },
-                    { doctor: "Dr. Anil Verma", time: "14 years" },
-                    { doctor: "Dr. Meera Kapoor", time: "11 years" },
-                    { doctor: "Dr. Vikram Singh", time: "9 years" },
-                    { doctor: "Dr. Sanya Nair", time: "7 years" },
-                    { doctor: "Dr. Rajesh Desai", time: "13 years" },
-                    { doctor: "Dr. Kavita Menon", time: "16 years" },
-                    { doctor: "Dr. Akash Rao", time: "10 years" },
-                    { doctor: "Dr. Sneha Mukherjee", time: "12 years" },
-                    { doctor: "Dr. Arvind Prasad", time: "14 years" },
-                    { doctor: "Dr. Ritu Malhotra", time: "8 years" },
-                    { doctor: "Dr. Sanjay Kulkarni", time: "11 years" },
-
+                    // Add other doctors here
                   ].map((i, index) => (
-                    <option key={index}>{i.doctor}</option>
+                    <option key={index} value={i.doctor}>
+                      {i.doctor} - {i.time} of experience
+                    </option>
                   ))}
                 </select>
               </div>
@@ -58,10 +116,30 @@ const page = () => {
                   id="date"
                   type="date"
                   className="border-green-secondary"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  required
                 />
               </div>
-              <Button className="bg-green-main hover:bg-green-700">
-                Schedule Appointment
+              <div className="space-y-2">
+                <Label htmlFor="time">Select Time</Label>
+                <Input
+                  id="time"
+                  type="time"
+                  className="border-green-secondary"
+                  value={time}
+                  onChange={(e) => setTime(e.target.value)}
+                  required
+                />
+              </div>
+              {error && <p className="text-red-500">{error}</p>}
+              {success && <p className="text-green-500">{success}</p>}
+              <Button
+                type="submit"
+                className="bg-green-main hover:bg-green-700"
+                disabled={loading}
+              >
+                {loading ? "Scheduling..." : "Schedule Appointment"}
               </Button>
             </form>
           </CardContent>
@@ -73,19 +151,22 @@ const page = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-          <ul className="space-y-2">
-              {[
-                { doctor: "Dr. Rahul", time: "Tomorrow, 10:00 AM" },
-                { doctor: "Dr. Rekha", time: "06/10/2023, 2:00 PM" },
-              ].map((appointment, index) => (
-                <li
-                  key={index}
-                  className="flex justify-between rounded-lg border p-2"
-                >
-                  <span>{appointment.doctor}</span>
-                  <span>{appointment.time}</span>
-                </li>
-              ))}
+            <ul className="space-y-2">
+              {appointments.length > 0 ? (
+                appointments.map((appointment, index) => (
+                  <li
+                    key={index}
+                    className="flex justify-between rounded-lg border p-2"
+                  >
+                    <span>{appointment.doctor}</span>
+                    <span>
+                      {appointment.date} at {appointment.time}
+                    </span>
+                  </li>
+                ))
+              ) : (
+                <p>No upcoming appointments.</p>
+              )}
             </ul>
           </CardContent>
         </Card>
@@ -94,4 +175,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ScheduleAppointment;
