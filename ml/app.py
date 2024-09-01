@@ -3,6 +3,7 @@ import pickle
 import numpy as np
 from prediction import predict_disease, specialist_assign
 from chatbot import generate_response
+from report import generate_analysis
 
 app = Flask(__name__)
 
@@ -30,6 +31,18 @@ def chat():
     
     response=generate_response(question)
     return jsonify(response)
+
+@app.route('/summarize',methods=['POST'])
+def analyse():
+    if 'report' not in request.files:
+        return jsonify({'error': 'report field is missing'}), 400
+    
+    file=request.files['report']
+    prompt = request.form["prompt"]
+    
+    response=generate_analysis(file,prompt)
+    
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True)
