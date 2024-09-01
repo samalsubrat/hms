@@ -1,6 +1,6 @@
-// pages/index.js
+
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { pdf } from "@react-pdf/renderer";
 import MyPDFDocument from "./MyPDFDocument";
 import { Input } from "@/components/ui/input";
@@ -37,8 +37,8 @@ function MainComponent() {
   ]);
   const [examination, setExamination] = useState("");
   const [investigation, setInvestigation] = useState("");
-  const [searchQuery, setSearchQuery] = useState(""); // New state for search query
-  const [filteredSuggestions, setFilteredSuggestions] = useState([]); // New state for filtered suggestions
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [diagnosisSearchQuery, setDiagnosisSearchQuery] = useState("");
   const [filteredDiagnosisSuggestions, setFilteredDiagnosisSuggestions] =
     useState([]);
@@ -166,12 +166,69 @@ function MainComponent() {
     },
   ];
 
-  // Handle search input change
+  const [patientCode, setPatientCode] = useState("");
+  const [patientName, setPatientName] = useState("");
+  const [patientAddress, setPatientAddress] = useState("");
+  const [patientDateOfBirth, setPatientDateOfBirth] = useState("");
+  const [patientEmail, setPatientEmail] = useState("");
+  const [patientPhoneNumber, setPatientPhoneNumber] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const fetchPatientData = async () => {
+    try {
+      const response = await fetch("/api/doctor/patient-data", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ code: patientCode }),
+      });
+      const data = await response.json();
+
+      if (data.data) {
+        const {
+          patientName,
+          patientAddress,
+          patientDateOfBirth,
+          patientEmail,
+          patientPhoneNumber,
+        } = data.data;
+
+        setPatientName(patientName);
+        setPatientAddress(patientAddress);
+        setPatientDateOfBirth(patientDateOfBirth);
+        setPatientEmail(patientEmail);
+        setPatientPhoneNumber(patientPhoneNumber);
+        setErrorMessage("");
+      } else {
+        setErrorMessage("Patient not found");
+      }
+    } catch (error) {
+      setErrorMessage("Error fetching data");
+      console.error("Error fetching patient data:", error);
+    }
+  };
+
+  // doctor
+  const [doctorData, setDoctorData] = useState({
+    doctorName: "",
+    doctorSpecialization: "",
+  });
+
+  useEffect(() => {
+    const doctorName = localStorage.getItem("doctorName");
+    const doctorSpecialization = localStorage.getItem("speciality");
+
+    setDoctorData({
+      doctorName: doctorName || "Unknown Doctor",
+      doctorSpecialization: doctorSpecialization || "Unknown Specialization",
+    });
+  }, []);
+
   const handleSearchChange = (event) => {
     const query = event.target.value;
     setSearchQuery(query);
 
-    // Filter complaints based on search query
     if (query) {
       const suggestions = complaints.filter((item) =>
         item.complaint.toLowerCase().includes(query.toLowerCase())
@@ -219,6 +276,43 @@ function MainComponent() {
 
   return (
     <div className="mx-auto space-y-6 p-6  bg-white shadow-md rounded-lg">
+      {/* changed patient details  */}
+      <div>
+        <Input
+          value={patientCode}
+          onChange={(e) => setPatientCode(e.target.value)}
+          placeholder="Enter Patient Code"
+        />
+        <button onClick={fetchPatientData}>Fetch Patient Data</button>
+
+        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+
+        <div>
+          <label>Patient Name:</label>
+          <Input value={patientName} readOnly />
+
+          <label>Patient Address:</label>
+          <Input value={patientAddress} readOnly />
+
+          <label>Date of Birth:</label>
+          <Input value={patientDateOfBirth} readOnly />
+
+          <label>Email:</label>
+          <Input value={patientEmail} readOnly />
+
+          <label>Phone Number:</label>
+          <Input value={patientPhoneNumber} readOnly />
+        </div>
+      </div>
+
+      {/* Doctor Details */}
+      {/* Input fields for doctor's name and specialization */}
+      <label>Doctor Name:</label>
+      <input type="text" value={doctorData.doctorName} readOnly />
+
+      <label>Doctor Specialization:</label>
+      <input type="text" value={doctorData.doctorSpecialization} readOnly />
+
       {/* vitals  */}
       <div className="p-4 border rounded-md">
         <h3 className="font-bold text-lg mb-2 text-gray-800">Vitals</h3>
