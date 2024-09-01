@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from "react";
-// import "./App.css";
+import "./App.css";
 import {Markdown} from "react-markdown";
 
 function App() {
@@ -88,7 +88,7 @@ function App() {
   return (
     <div>
       <div className="navbar">
-        <h1>Troubleshoot Chat</h1>
+        <h1>Report Summary</h1>
       </div>
       <div className="chat-component">
         {messages.map((message, idx) => {
