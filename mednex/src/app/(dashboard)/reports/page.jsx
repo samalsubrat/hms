@@ -32,6 +32,7 @@ import {
   PlusIcon
 } from "lucide-react";
 import { reports } from "@/lib/data";
+import { useState, useEffect } from "react";
 import { getRole } from "@/app/sign-in/role";
 
 export default function Component() {

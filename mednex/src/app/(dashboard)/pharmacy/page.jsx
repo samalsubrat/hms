@@ -1,6 +1,4 @@
 "use client";
-
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -46,7 +44,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { medications } from "@/lib/data";
+import { useState, useEffect } from "react";
 import { getRole } from "@/app/sign-in/role";
 
 export default function Component() {

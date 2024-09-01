@@ -41,6 +41,7 @@ import {
   ActivityIcon,
 } from "lucide-react";
 import { beds } from "@/lib/data";
+import { useState, useEffect } from "react";
 import { getRole } from "@/app/sign-in/role";
 
 
