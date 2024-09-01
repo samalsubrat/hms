@@ -2,7 +2,7 @@ import { CalendarIcon, PillIcon, FileTextIcon, VideoIcon } from "lucide-react";
 
 // export let role = "admin"; admin,doctors,staff,patient,lab,pharmacy
 
-export let role = "doctors";
+export let role = "admin";
 
 export const hospitalCode = "AI";
 
@@ -11,7 +11,6 @@ export const staffCode = "ST";
 export const doctorCode = "DC";
 export const labCode = "LB";
 export const pharmacyCode = "PH";
-
 export const doctors = [
   {
     id: 1,
@@ -24,6 +23,9 @@ export const doctors = [
     password: "arjun.patel",
     code: `${hospitalCode}${doctorCode}0001`,
     role: "doctor",
+    education: "MBBS, MD (Cardiology)",
+    specialization: "Interventional Cardiology, Cardiac Imaging",
+    certificates: ["Fellowship in Cardiology", "Certified in Cardiac Life Support"],
   },
   {
     id: 2,
@@ -36,6 +38,9 @@ export const doctors = [
     password: "neha.sharma",
     code: `${hospitalCode}${doctorCode}0002`,
     role: "doctor",
+    education: "MBBS, MD (Dermatology)",
+    specialization: "Cosmetic Dermatology, Laser Treatment",
+    certificates: ["Diploma in Dermatology", "Certified in Advanced Dermatological Procedures"],
   },
   {
     id: 3,
@@ -48,6 +53,9 @@ export const doctors = [
     password: "rohan.iyer",
     code: `${hospitalCode}${doctorCode}0003`,
     role: "doctor",
+    education: "MBBS, MD (Neurology)",
+    specialization: "Stroke Management, Epilepsy",
+    certificates: ["Fellowship in Neurology", "Certified in Neuroimaging"],
   },
   {
     id: 4,
@@ -60,6 +68,9 @@ export const doctors = [
     password: "priya.gupta",
     code: `${hospitalCode}${doctorCode}0004`,
     role: "doctor",
+    education: "MBBS, MD (Pediatrics)",
+    specialization: "Neonatology, Pediatric Infectious Diseases",
+    certificates: ["Diploma in Pediatrics", "Certified in Pediatric Advanced Life Support"],
   },
   {
     id: 5,
@@ -72,6 +83,9 @@ export const doctors = [
     password: "anil.verma",
     code: `${hospitalCode}${doctorCode}0005`,
     role: "doctor",
+    education: "MBBS, MS (Orthopedics)",
+    specialization: "Joint Replacement, Sports Injuries",
+    certificates: ["Fellowship in Orthopedics", "Certified in Arthroscopy"],
   },
   {
     id: 6,
@@ -84,6 +98,9 @@ export const doctors = [
     password: "meera.kapoor",
     code: `${hospitalCode}${doctorCode}0006`,
     role: "doctor",
+    education: "MBBS, MD (Gynecology)",
+    specialization: "High-Risk Pregnancies, Reproductive Endocrinology",
+    certificates: ["Diploma in Gynecology", "Certified in Obstetric Ultrasound"],
   },
   {
     id: 7,
@@ -96,6 +113,9 @@ export const doctors = [
     password: "vikram.singh",
     code: `${hospitalCode}${doctorCode}0007`,
     role: "doctor",
+    education: "MBBS, MD (Oncology)",
+    specialization: "Medical Oncology, Radiation Therapy",
+    certificates: ["Fellowship in Oncology", "Certified in Cancer Chemotherapy"],
   },
   {
     id: 8,
@@ -108,6 +128,9 @@ export const doctors = [
     password: "sanya.nair",
     code: `${hospitalCode}${doctorCode}0008`,
     role: "doctor",
+    education: "MBBS, MD (Endocrinology)",
+    specialization: "Diabetes Management, Thyroid Disorders",
+    certificates: ["Diploma in Endocrinology", "Certified in Diabetology"],
   },
   {
     id: 9,
@@ -120,6 +143,9 @@ export const doctors = [
     password: "rajesh.desai",
     code: `${hospitalCode}${doctorCode}0009`,
     role: "doctor",
+    education: "MBBS, MD (Gastroenterology)",
+    specialization: "Hepatology, Endoscopic Procedures",
+    certificates: ["Fellowship in Gastroenterology", "Certified in Advanced Endoscopy"],
   },
   {
     id: 10,
@@ -132,6 +158,9 @@ export const doctors = [
     password: "kavita.menon",
     code: `${hospitalCode}${doctorCode}0010`,
     role: "doctor",
+    education: "MBBS, MD (Psychiatry)",
+    specialization: "Child Psychiatry, Cognitive Behavioral Therapy",
+    certificates: ["Diploma in Psychiatry", "Certified in Cognitive Behavioral Therapy"],
   },
   {
     id: 11,
@@ -144,6 +173,9 @@ export const doctors = [
     password: "akash.rao",
     code: `${hospitalCode}${doctorCode}0011`,
     role: "doctor",
+    education: "MBBS, MS (Urology)",
+    specialization: "Kidney Transplants, Minimally Invasive Surgery",
+    certificates: ["Fellowship in Urology", "Certified in Endourology"],
   },
   {
     id: 12,
@@ -156,6 +188,9 @@ export const doctors = [
     password: "sneha.mukherjee",
     code: `${hospitalCode}${doctorCode}0012`,
     role: "doctor",
+    education: "MBBS, MS (Ophthalmology)",
+    specialization: "Cataract Surgery, Glaucoma Management",
+    certificates: ["Fellowship in Ophthalmology", "Certified in Laser Eye Surgery"],
   },
   {
     id: 13,
@@ -168,6 +203,9 @@ export const doctors = [
     password: "arvind.prasad",
     code: `${hospitalCode}${doctorCode}0013`,
     role: "doctor",
+    education: "MBBS, MD (Pulmonology)",
+    specialization: "Asthma Management, Interstitial Lung Diseases",
+    certificates: ["Fellowship in Pulmonology", "Certified in Pulmonary Function Testing"],
   },
   {
     id: 14,
@@ -180,6 +218,9 @@ export const doctors = [
     password: "ritu.malhotra",
     code: `${hospitalCode}${doctorCode}0014`,
     role: "doctor",
+    education: "MBBS, MD (Nephrology)",
+    specialization: "Dialysis, Kidney Transplantation",
+    certificates: ["Diploma in Nephrology", "Certified in Renal Transplantation"],
   },
   {
     id: 15,
@@ -192,8 +233,12 @@ export const doctors = [
     password: "sanjay.kulkarni",
     code: `${hospitalCode}${doctorCode}0015`,
     role: "doctor",
-  },
+    education: "MBBS, MS (ENT)",
+    specialization: "Rhinology, Head and Neck Surgery",
+    certificates: ["Fellowship in ENT", "Certified in Otolaryngology"],
+  }
 ];
+
 
 export const staff = [
   {
@@ -207,6 +252,8 @@ export const staff = [
     password: "ravi.kumar",
     code: `${hospitalCode}${staffCode}0001`,
     role: "staff",
+    education: "B.Sc Nursing",
+    skills: ["Patient Care", "Emergency Response", "Medication Administration"]
   },
   {
     id: 2,
@@ -219,6 +266,8 @@ export const staff = [
     password: "aisha.patel",
     code: `${hospitalCode}${staffCode}0002`,
     role: "staff",
+    education: "Diploma in Office Administration",
+    skills: ["Customer Service", "Appointment Scheduling", "Data Entry"]
   },
   {
     id: 3,
@@ -231,6 +280,8 @@ export const staff = [
     password: "arjun.sharma",
     code: `${hospitalCode}${staffCode}0003`,
     role: "staff",
+    education: "B.Pharm",
+    skills: ["Medication Dispensing", "Drug Interaction Knowledge", "Pharmaceutical Care"]
   },
   {
     id: 4,
@@ -243,6 +294,8 @@ export const staff = [
     password: "priya.singh12",
     code: `${hospitalCode}${staffCode}0004`,
     role: "staff",
+    education: "Bachelor's in Business Administration",
+    skills: ["Office Management", "Scheduling", "Report Preparation"]
   },
   {
     id: 5,
@@ -255,6 +308,8 @@ export const staff = [
     password: "rajesh.reddy",
     code: `${hospitalCode}${staffCode}0005`,
     role: "staff",
+    education: "Diploma in Medical Laboratory Technology",
+    skills: ["Sample Analysis", "Equipment Maintenance", "Laboratory Testing"]
   },
   {
     id: 6,
@@ -267,6 +322,8 @@ export const staff = [
     password: "sneha.gupta",
     code: `${hospitalCode}${staffCode}0006`,
     role: "staff",
+    education: "Bachelor's in Finance",
+    skills: ["Billing Software", "Insurance Claims", "Financial Reporting"]
   },
   {
     id: 7,
@@ -279,6 +336,8 @@ export const staff = [
     password: "kiran.mehta",
     code: `${hospitalCode}${staffCode}0007`,
     role: "staff",
+    education: "Associate's Degree in Health Information Management",
+    skills: ["Medical Record Keeping", "Data Entry", "Confidentiality"]
   },
   {
     id: 8,
@@ -291,6 +350,8 @@ export const staff = [
     password: "ankit.joshi",
     code: `${hospitalCode}${staffCode}0008`,
     role: "staff",
+    education: "Diploma in Electrical Engineering",
+    skills: ["Maintenance Procedures", "Troubleshooting", "Repair Work"]
   },
   {
     id: 9,
@@ -303,6 +364,8 @@ export const staff = [
     password: "neha.kapoor",
     code: `${hospitalCode}${staffCode}0009`,
     role: "staff",
+    education: "Diploma in Medical Administration",
+    skills: ["Patient Coordination", "Record Management", "Communication"]
   },
   {
     id: 10,
@@ -315,6 +378,8 @@ export const staff = [
     password: "amit.verma",
     code: `${hospitalCode}${staffCode}0010`,
     role: "staff",
+    education: "Bachelor's in Computer Science",
+    skills: ["Technical Support", "System Administration", "Network Troubleshooting"]
   },
 ];
 

@@ -84,7 +84,7 @@ const DoctorDashboard = () => {
   const generateDoctorId = (id, year = new Date().getFullYear()) => {
     const shortYear = year.toString().slice(-2);
     const formattedId = id.toString().padStart(4, "0");
-    return `AIDC${shortYear}-${formattedId}`;
+    return `SUDC${shortYear}-${formattedId}`;
   };
 
   return (
@@ -100,12 +100,14 @@ const DoctorDashboard = () => {
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 w-full">
         {filteredDoctors.map((card) => (
-          // <Link key={card.id} className="hover:scale-105 transition-transform duration-300">
-            <Card key={card.id}>
+          // <Link>
+            <Card key={card.id} className="hover:scale-105 transition-transform duration-300">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-0">
+              <Link href={`/list/doctors/${card.id}`}>
                 <CardTitle className="text-lg font-bold">
                   {card.doctorName}
                 </CardTitle>
+                </Link>
               </CardHeader>
               <CardContent>
                 <div className="text-base font-semibold">{card.speciality}</div>

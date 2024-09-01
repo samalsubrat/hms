@@ -1,21 +1,57 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CalendarIcon, ClockIcon, MailIcon, PhoneIcon, UserIcon } from "lucide-react"
-import Image from 'next/image'
+import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  CalendarIcon,
+  ClockIcon,
+  MailIcon,
+  PhoneIcon,
+  UserIcon,
+} from "lucide-react";
+import Image from "next/image";
+import { staff } from "@/lib/data";
 
-export default function Component() {
-  const [activeTab, setActiveTab] = useState("overview")
+export default function StaffProfile() {
+  const { id } = useParams();
+  const [currentStaff, setCurrentStaff] = useState(null);
+  const [activeTab, setActiveTab] = useState("overview");
+
+  useEffect(() => {
+    // Find the staff member by ID
+    const foundStaff = staff.find((member) => member.id === parseInt(id));
+    setCurrentStaff(foundStaff);
+  }, [id]);
+
+  if (!currentStaff) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div className=" mx-auto -mt-5 -pt-10">
+    <div className="mx-auto -mt-5 -pt-10">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-3xl font-bold text-green-main">Staff Profile</h1>
-        <Button variant="outline" className="border-green-main text-green-main hover:bg-green-100">
+        <Button
+          variant="outline"
+          className="border-green-main text-green-main hover:bg-green-100"
+        >
           Edit Profile
         </Button>
       </div>
@@ -26,32 +62,32 @@ export default function Component() {
             <div className="h-32 w-32 overflow-hidden rounded-full">
               <Image
                 src="/placeholder.svg?height=128&width=128"
-                alt="Mr. Ravi Kumar"
-                className="h-full w-full object-cover rouned-full bg-gray-200"
+                alt={currentStaff.staffName}
+                className="h-full w-full object-cover rounded-full bg-gray-200"
                 width={1000}
                 height={1000}
               />
             </div>
-            <CardTitle className="text-2xl">Mr. Ravi Kumar</CardTitle>
-            <CardDescription>Administrative Staff</CardDescription>
+            <CardTitle className="text-2xl">{currentStaff.staffName}</CardTitle>
+            <CardDescription>{currentStaff.role}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div className="flex items-center">
                 <UserIcon className="mr-2 h-5 w-5 text-green-main" />
-                <span>Employee ID: AIST0001</span>
+                <span>Employee ID: {currentStaff.code}</span>
               </div>
               <div className="flex items-center">
                 <MailIcon className="mr-2 h-5 w-5 text-green-main" />
-                <span>ravi.kumar@hospital.com</span>
+                <span>{currentStaff.email}</span>
               </div>
               <div className="flex items-center">
                 <PhoneIcon className="mr-2 h-5 w-5 text-green-main" />
-                <span>+19 9876543225</span>
+                <span>{currentStaff.phoneNumber}</span>
               </div>
               <div className="flex items-center">
                 <CalendarIcon className="mr-2 h-5 w-5 text-green-main" />
-                <span>Joined: March 10, 2016</span>
+                <span>Joined: {currentStaff.yearOfJoining}</span>
               </div>
             </div>
           </CardContent>
@@ -73,21 +109,18 @@ export default function Component() {
                   <div className="space-y-4">
                     <div>
                       <h3 className="text-lg font-semibold">Role</h3>
-                      <p>Responsible for managing administrative tasks, including scheduling, documentation, and coordination between departments.</p>
+                      <p>{currentStaff.role}</p>
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold">Education</h3>
-                      <ul className="list-inside list-disc">
-                        <li>Bachelor&apos;s in Business Administration - SOA University, 2014</li>
-                        <li>Diploma in Office Management , 2016</li>
-                      </ul>
+                      <p>{currentStaff.education}</p>
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold">Skills</h3>
                       <ul className="list-inside list-disc">
-                        <li>Proficient in MS Office Suite</li>
-                        <li>Excellent organizational and multitasking abilities</li>
-                        <li>Strong communication skills</li>
+                        {currentStaff.skills.map((skill, index) => (
+                          <li key={index}>{skill}</li>
+                        ))}
                       </ul>
                     </div>
                   </div>
@@ -110,13 +143,31 @@ export default function Component() {
                     </TableHeader>
                     <TableBody>
                       {[
-                        { task: "Update Patient Records", dueDate: "2024-08-30", status: "In Progress" },
-                        { task: "Schedule Staff Meeting", dueDate: "2024-08-28", status: "Pending" },
-                        { task: "Prepare Monthly Report", dueDate: "2024-09-01", status: "Not Started" },
-                        { task: "Coordinate with IT for System Upgrade", dueDate: "2024-08-29", status: "Completed" },
+                        {
+                          task: "Update Patient Records",
+                          dueDate: "2024-08-30",
+                          status: "In Progress",
+                        },
+                        {
+                          task: "Schedule Staff Meeting",
+                          dueDate: "2024-08-28",
+                          status: "Pending",
+                        },
+                        {
+                          task: "Prepare Monthly Report",
+                          dueDate: "2024-09-01",
+                          status: "Not Started",
+                        },
+                        {
+                          task: "Coordinate with IT for System Upgrade",
+                          dueDate: "2024-08-29",
+                          status: "Completed",
+                        },
                       ].map((task, index) => (
                         <TableRow key={index}>
-                          <TableCell className="font-medium">{task.task}</TableCell>
+                          <TableCell className="font-medium">
+                            {task.task}
+                          </TableCell>
                           <TableCell>{task.dueDate}</TableCell>
                           <TableCell>{task.status}</TableCell>
                         </TableRow>
@@ -142,13 +193,23 @@ export default function Component() {
                     </TableHeader>
                     <TableBody>
                       {[
-                        { id: "D1001", name: "Administration", head: "Alice Brown" },
+                        {
+                          id: "D1001",
+                          name: "Administration",
+                          head: "Alice Brown",
+                        },
                         { id: "D1002", name: "HR", head: "David Green" },
                         { id: "D1003", name: "Finance", head: "Clara White" },
-                        { id: "D1004", name: "IT Support", head: "Michael Black" },
+                        {
+                          id: "D1004",
+                          name: "IT Support",
+                          head: "Michael Black",
+                        },
                       ].map((department) => (
                         <TableRow key={department.id}>
-                          <TableCell className="font-medium">{department.id}</TableCell>
+                          <TableCell className="font-medium">
+                            {department.id}
+                          </TableCell>
                           <TableCell>{department.name}</TableCell>
                           <TableCell>{department.head}</TableCell>
                         </TableRow>
@@ -170,10 +231,19 @@ export default function Component() {
           <CardContent>
             <ul className="space-y-4">
               {[
-                { action: "Coordinated with IT for system upgrade", time: "3 hours ago" },
-                { action: "Reviewed employee attendance records", time: "Yesterday" },
+                {
+                  action: "Coordinated with IT for system upgrade",
+                  time: "3 hours ago",
+                },
+                {
+                  action: "Reviewed employee attendance records",
+                  time: "Yesterday",
+                },
                 { action: "Scheduled department meetings", time: "2 days ago" },
-                { action: "Prepared monthly administrative report", time: "Last week" },
+                {
+                  action: "Prepared monthly administrative report",
+                  time: "Last week",
+                },
               ].map((activity, index) => (
                 <li key={index} className="flex items-center">
                   <ClockIcon className="mr-2 h-5 w-5 text-green-main" />
@@ -195,11 +265,16 @@ export default function Component() {
             <div className="space-y-4">
               <div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">Task Completion Rate</span>
+                  <span className="text-sm font-medium">
+                    Task Completion Rate
+                  </span>
                   <span className="text-sm font-medium">90%</span>
                 </div>
                 <div className="mt-2 h-2 w-full rounded-full bg-gray-200">
-                  <div className="h-2 rounded-full bg-green-main" style={{ width: "90%" }}></div>
+                  <div
+                    className="h-2 rounded-full bg-green-main"
+                    style={{ width: "90%" }}
+                  ></div>
                 </div>
               </div>
               <div>
@@ -208,16 +283,24 @@ export default function Component() {
                   <span className="text-sm font-medium">95%</span>
                 </div>
                 <div className="mt-2 h-2 w-full rounded-full bg-gray-200">
-                  <div className="h-2 rounded-full bg-green-main" style={{ width: "95%" }}></div>
+                  <div
+                    className="h-2 rounded-full bg-green-main"
+                    style={{ width: "95%" }}
+                  ></div>
                 </div>
               </div>
               <div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">Employee Satisfaction</span>
+                  <span className="text-sm font-medium">
+                    Employee Satisfaction
+                  </span>
                   <span className="text-sm font-medium">85%</span>
                 </div>
                 <div className="mt-2 h-2 w-full rounded-full bg-gray-200">
-                  <div className="h-2 rounded-full bg-green-main" style={{ width: "85%" }}></div>
+                  <div
+                    className="h-2 rounded-full bg-green-main"
+                    style={{ width: "85%" }}
+                  ></div>
                 </div>
               </div>
             </div>
@@ -225,5 +308,5 @@ export default function Component() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

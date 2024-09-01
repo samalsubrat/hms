@@ -84,7 +84,7 @@ const StaffDashboard = () => {
     // Add leading zeros to the ID, ensuring it is 4 digits long
     const formattedId = id.toString().padStart(4, "0");
 
-    return `AIST${shortYear}-${formattedId}`;
+    return `SUST${shortYear}-${formattedId}`;
   };
 
   return (
@@ -100,92 +100,95 @@ const StaffDashboard = () => {
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 w-full">
         {filteredStaff.map((card) => (
-          <Link href={`/list/staffs/${card.id}`} key={card.id} className="hover:scale-105 transition-transform duration-300">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-0">
+          <Card
+            key={card.id}
+            className="hover:scale-105 transition-transform duration-300"
+          >
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-0">
+              <Link href={`/list/staffs/${card.id}`}>
                 <CardTitle className="text-lg font-bold">
                   {card.staffName}
                 </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-base font-semibold">{card.role}</div>
+              </Link>
+            </CardHeader>
+            <CardContent>
+              <div className="text-base font-semibold">{card.role}</div>
+              <p className="text-sm text-muted-foreground">
+                Department: {card.department}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Year of Joining: {card.yearOfJoining}
+              </p>
+              {role !== "patient" && (
                 <p className="text-sm text-muted-foreground">
-                  Department: {card.department}
+                  Phone Number: {card.phoneNumber}
                 </p>
-                <p className="text-sm text-muted-foreground">
-                  Year of Joining: {card.yearOfJoining}
-                </p>
-                {role !== "patient" && (
-                  <p className="text-sm text-muted-foreground">
-                    Phone Number: {card.phoneNumber}
-                  </p>
-                )}
-                <p className="text-sm text-muted-foreground">
-                  Staff ID: {generateStaffId(card.id, card.yearOfJoining)}
-                </p>
-                {role === "admin" && (
-                  <div className="flex space-x-4">
-                    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                      <DialogTrigger asChild>
-                        <div
-                          variant="link"
-                          onClick={() => startEditing(card)}
-                          className="text-blue-500 cursor-pointer hover:font-bold transition-all duration-300"
-                        >
-                          Edit
-                        </div>
-                      </DialogTrigger>
-                      <DialogContent>
-                        <DialogHeader>
-                          <DialogTitle>Edit {card.staffName}</DialogTitle>
-                        </DialogHeader>
-                        <div className="space-y-4">
-                          <Input
-                            name="staffName"
-                            value={editableContent.staffName}
-                            onChange={handleInputChange}
-                            placeholder="Staff Name"
-                            className="border-2  p-1 mb-2 w-full"
-                          />
-                          <Input
-                            name="role"
-                            value={editableContent.role}
-                            onChange={handleInputChange}
-                            placeholder="Role"
-                            className="border-2  p-1 mb-2 w-full"
-                          />
-                          <Input
-                            name="department"
-                            value={editableContent.department}
-                            onChange={handleInputChange}
-                            placeholder="Department"
-                            className="border-2  p-1 mb-2 w-full"
-                          />
-                          <Input
-                            name="yearOfJoining"
-                            value={editableContent.yearOfJoining}
-                            onChange={handleInputChange}
-                            placeholder="Year of Joining"
-                            className="border-2  p-1 w-full"
-                          />
-                          <Button onClick={saveEdit} className="mt-2">
-                            Save
-                          </Button>
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                    <div
-                      variant="link"
-                      onClick={() => deleteStaff(card.id)}
-                      className="text-red-500 cursor-pointer hover:font-bold transition-all duration-300"
-                    >
-                      Delete
-                    </div>
+              )}
+              <p className="text-sm text-muted-foreground">
+                Staff ID: {generateStaffId(card.id, card.yearOfJoining)}
+              </p>
+              {role === "admin" && (
+                <div className="flex space-x-4">
+                  <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                    <DialogTrigger asChild>
+                      <div
+                        variant="link"
+                        onClick={() => startEditing(card)}
+                        className="text-blue-500 cursor-pointer hover:font-bold transition-all duration-300"
+                      >
+                        Edit
+                      </div>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Edit {card.staffName}</DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <Input
+                          name="staffName"
+                          value={editableContent.staffName}
+                          onChange={handleInputChange}
+                          placeholder="Staff Name"
+                          className="border-2  p-1 mb-2 w-full"
+                        />
+                        <Input
+                          name="role"
+                          value={editableContent.role}
+                          onChange={handleInputChange}
+                          placeholder="Role"
+                          className="border-2  p-1 mb-2 w-full"
+                        />
+                        <Input
+                          name="department"
+                          value={editableContent.department}
+                          onChange={handleInputChange}
+                          placeholder="Department"
+                          className="border-2  p-1 mb-2 w-full"
+                        />
+                        <Input
+                          name="yearOfJoining"
+                          value={editableContent.yearOfJoining}
+                          onChange={handleInputChange}
+                          placeholder="Year of Joining"
+                          className="border-2  p-1 w-full"
+                        />
+                        <Button onClick={saveEdit} className="mt-2">
+                          Save
+                        </Button>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                  <div
+                    variant="link"
+                    onClick={() => deleteStaff(card.id)}
+                    className="text-red-500 cursor-pointer hover:font-bold transition-all duration-300"
+                  >
+                    Delete
                   </div>
-                )}
-              </CardContent>
-            </Card>
-          </Link>
+                </div>
+              )}
+            </CardContent>
+          </Card>
         ))}
       </div>
     </div>
