@@ -10,10 +10,13 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { doctors, role } from "@/lib/data";
+import { doctors } from "@/lib/data";
 import Link from "next/link";
+import { getRole } from "@/app/sign-in/role";
+
 
 const DoctorDashboard = () => {
+  const role = getRole();
   const [cards, setCards] = useState([]);
   const [editingCardId, setEditingCardId] = useState(null);
   const [editableContent, setEditableContent] = useState({

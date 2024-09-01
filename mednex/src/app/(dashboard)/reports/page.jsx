@@ -31,9 +31,11 @@ import {
   CalendarIcon,
   PlusIcon
 } from "lucide-react";
-import { role, reports } from "@/lib/data";
+import { reports } from "@/lib/data";
+import { getRole } from "@/app/sign-in/role";
 
 export default function Component() {
+  const role = getRole();
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("all");
 
