@@ -1,6 +1,10 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 export default function SignIn() {
   const router = useRouter();
@@ -58,36 +62,46 @@ export default function SignIn() {
   };
 
   return (
-    <div>
-      <h2>Sign In</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email or Code:</label>
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email or code"
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
-            required
-          />
-        </div>
-        <div>
-          <button type="submit">Sign In</button>
-        </div>
-      </form>
+    <>
+      <div className="w-screen h-screen flex items-center justify-center bg-gradient-to-r from-teal-200 to-green-main">
+        <Card className="w-full max-w-md mx-auto p-4">
+          <div className="space-y-4">
+            <h2>Sign In</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="flex flex-col space-y-2">
+                <Label htmlFor="email">Email or ID</Label>
+                <Input
+                  id="email"
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email or code"
+                  required
+                />
+              </div>
+              <div>
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  required
+                />
+              </div>
+              <div>
+                <Button className="w-full bg-green-main" type="submit">
+                  Sign In
+                </Button>
+              </div>
+            </form>
 
-      {message && <p style={{ color: "green" }}>{message}</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-    </div>
+            {message && <p style={{ color: "green" }}>{message}</p>}
+            {error && <p style={{ color: "red" }}>{error}</p>}
+          </div>
+        </Card>
+      </div>
+    </>
   );
 }
