@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { pdf } from "@react-pdf/renderer";
 import MyPDFDocument from "./MyPDFDocument";
 import { Input } from "@/components/ui/input";
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+
 
 function MainComponent() {
   const medicationsData = [

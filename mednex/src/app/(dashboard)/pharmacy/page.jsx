@@ -35,9 +35,11 @@ import {
   AlertTriangleIcon,
 } from "lucide-react";
 import { medications } from "@/lib/data";
-import { role } from "@/lib/data";
+import { getRole } from "@/app/sign-in/role";
+
 
 export default function Component() {
+  const role = getRole();
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredMedications = medications.filter(
