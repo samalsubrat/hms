@@ -13,7 +13,7 @@ export async function POST(req) {
         status: 200,
       });
     } else {
-      return new Response(JSON.stringify({ error: 'User not found' }), {
+      return new Response(JSON.stringify({ error: 'Patient not found' }), {
         status: 404,
       });
     }
