@@ -34,11 +34,58 @@ import {
   MoreVerticalIcon,
   AlertTriangleIcon,
 } from "lucide-react";
-import { medications } from "@/lib/data";
+import { newMedications, medications } from "@/lib/data";
 import { role } from "@/lib/data";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 
 export default function Component() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [Name, setName] = useState("");
+  const [batch, setBatch] = useState("");
+  const [expiry, setExpiry] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  // Handle form submission
+  const handleMedicine = (e) => {
+    e.preventDefault();
+
+    try {
+      if (batch.length != 11) {
+        alert("Batch number must be exactly 11 digits.");
+        return;
+      }
+
+      const today = new Date().toISOString().split("T")[0]; // Get today's date in 'YYYY-MM-DD' format
+      if (expiry < today) {
+        alert("Expiry date cannot be in the past.");
+        return;
+      }
+
+      const legitMedication = newMedications.find(
+        (med) => med.batchNumber === batch
+      );
+      if (legitMedication) {
+        medications.push(legitMedication);
+      }
+    } catch (e) {
+      alert("Batch or Expiry has an issue");
+    } finally {
+      setName("");
+      setBatch("");
+      setExpiry("");
+    }
+    // Reset the input fields (optional)
+    setIsDialogOpen(false);
+  };
 
   const filteredMedications = medications.filter(
     (med) =>
@@ -63,12 +110,69 @@ export default function Component() {
           />
         </div>
         <div className="flex gap-2">
-          {(role === "admin" || role === "pharmacy") && (
-            <Button className="bg-green-main hover:bg-green-700">
-              <PlusIcon className="mr-2 h-4 w-4" />
-              Add Medication
-            </Button>
-          )}
+          <Dialog>
+            {(role === "admin" || role === "lab") && (
+              <DialogTrigger asChild>
+                <Button
+                  onClick={() => setIsDialogOpen(true)}
+                  className="bg-green-main hover:bg-green-700"
+                >
+                  Add New Medicine
+                </Button>
+              </DialogTrigger>
+            )}
+            <DialogContent className="sm:max-w-[425px]">
+              {(role === "admin" || role === "lab") && (
+                <DialogHeader>
+                  <DialogTitle>Add New Medicine</DialogTitle>
+                  <DialogDescription>
+                    Enter the details of the medicine to add it to the system.
+                  </DialogDescription>
+                </DialogHeader>
+              )}
+              <form onSubmit={handleMedicine}>
+                <div className="grid gap-4 py-4">
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="name" className="text-right">
+                      Name
+                    </Label>
+                    <Input
+                      id="name"
+                      value={Name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="col-span-3"
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="batch" className="text-right">
+                      Batch No.
+                    </Label>
+                    <Input
+                      id="batch"
+                      value={batch}
+                      onChange={(e) => setBatch(e.target.value)}
+                      className="col-span-3"
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="expiry" className="text-right">
+                      Expiry Date
+                    </Label>
+                    <Input
+                      id="expiry"
+                      type="date"
+                      value={expiry}
+                      onChange={(e) => setExpiry(e.target.value)}
+                      className="col-span-3"
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button type="submit">Add Medicine</Button>
+                </DialogFooter>
+              </form>
+            </DialogContent>
+          </Dialog>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -80,11 +184,12 @@ export default function Component() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
+              <DropdownMenuLabel>Filter by Type</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>In Stock</DropdownMenuItem>
-              <DropdownMenuItem>Low Stock</DropdownMenuItem>
-              <DropdownMenuItem>Out of Stock</DropdownMenuItem>
+              <DropdownMenuItem>ICU</DropdownMenuItem>
+              <DropdownMenuItem>General</DropdownMenuItem>
+              <DropdownMenuItem>Pediatric</DropdownMenuItem>
+              <DropdownMenuItem>Maternity</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
