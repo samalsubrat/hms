@@ -16,7 +16,11 @@ import { getRole } from "@/app/sign-in/role";
 
 
 const DoctorDashboard = () => {
-  const role = getRole();
+    const [role, setRole] = useState(null);
+useEffect(() => {
+    // Retrieve the role from localStorage only on the client side
+    setRole(getRole());
+  }, []);
   const [cards, setCards] = useState([]);
   const [editingCardId, setEditingCardId] = useState(null);
   const [editableContent, setEditableContent] = useState({

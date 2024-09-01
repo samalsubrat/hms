@@ -40,7 +40,11 @@ import { getRole } from "@/app/sign-in/role";
 {
 }
 export default function Component() {
-  const role = getRole();
+    const [role, setRole] = useState(null);
+useEffect(() => {
+    // Retrieve the role from localStorage only on the client side
+    setRole(getRole());
+  }, []);
   return (
     <>
       {role === "patient" && (
