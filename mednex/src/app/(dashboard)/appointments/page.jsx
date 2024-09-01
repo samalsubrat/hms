@@ -30,9 +30,25 @@ const page = () => {
                   id="doctor"
                   className="w-full rounded-md border border-green-secondary p-2"
                 >
-                  <option>Dr. Anuj</option>
-                  <option>Dr. Rahul</option>
-                  <option>Dr. Rekha</option>
+                  {[
+                    { doctor: "Dr. Arjun Patel", time: "12 years" },
+                    { doctor: "Dr. Neha Sharma", time: "8 years" },
+                    { doctor: "Dr. Rohan Iyer", time: "15 years" },
+                    { doctor: "Dr. Priya Gupta", time: "10 years" },
+                    { doctor: "Dr. Anil Verma", time: "14 years" },
+                    { doctor: "Dr. Meera Kapoor", time: "11 years" },
+                    { doctor: "Dr. Vikram Singh", time: "9 years" },
+                    { doctor: "Dr. Sanya Nair", time: "7 years" },
+                    { doctor: "Dr. Rajesh Desai", time: "13 years" },
+                    { doctor: "Dr. Kavita Menon", time: "16 years" },
+                    { doctor: "Dr. Akash Rao", time: "10 years" },
+                    { doctor: "Dr. Sneha Mukherjee", time: "12 years" },
+                    { doctor: "Dr. Arvind Prasad", time: "14 years" },
+                    { doctor: "Dr. Ritu Malhotra", time: "8 years" },
+                    { doctor: "Dr. Sanjay Kulkarni", time: "11 years" },
+                  ].map((i, index) => (
+                    <option key={index}>{i.doctor}</option>
+                  ))}
                 </select>
               </div>
               <div className="space-y-2">
@@ -58,8 +74,21 @@ const page = () => {
           <CardContent>
             <ul className="space-y-2">
               {[
-                { doctor: "Dr. Rahul", time: "Tomorrow, 10:00 AM" },
-                { doctor: "Dr. Rekha", time: "06/10/2023, 2:00 PM" },
+                { doctor: "Dr. Arjun Patel", time: "12 years" },
+                { doctor: "Dr. Neha Sharma", time: "8 years" },
+                { doctor: "Dr. Rohan Iyer", time: "15 years" },
+                { doctor: "Dr. Priya Gupta", time: "10 years" },
+                { doctor: "Dr. Anil Verma", time: "14 years" },
+                { doctor: "Dr. Meera Kapoor", time: "11 years" },
+                { doctor: "Dr. Vikram Singh", time: "9 years" },
+                { doctor: "Dr. Sanya Nair", time: "7 years" },
+                { doctor: "Dr. Rajesh Desai", time: "13 years" },
+                { doctor: "Dr. Kavita Menon", time: "16 years" },
+                { doctor: "Dr. Akash Rao", time: "10 years" },
+                { doctor: "Dr. Sneha Mukherjee", time: "12 years" },
+                { doctor: "Dr. Arvind Prasad", time: "14 years" },
+                { doctor: "Dr. Ritu Malhotra", time: "8 years" },
+                { doctor: "Dr. Sanjay Kulkarni", time: "11 years" },
               ].map((appointment, index) => (
                 <li
                   key={index}
