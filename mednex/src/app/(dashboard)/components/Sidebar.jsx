@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect,useState } from "react";
 import { Button } from "../../../components/ui/button";
 import {
   LayoutDashboardIcon,
@@ -116,7 +116,12 @@ function signOut() {
 export default function Sidebar() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
-  const role = getRole();
+  const [role, setRole] = useState(null);
+  useEffect(() => {
+    // Retrieve the role from localStorage only on the client side
+    setRole(getRole());
+  }, []);
+
   return (
     <>
       <div className="flex h-screen bg-white relative">
@@ -141,7 +146,7 @@ export default function Sidebar() {
               } `}
               style={{ transitionProperty: "opacity, transform" }}
             >
-              Trelix
+              Mednex
             </h2>
             <Button
               className={`max-lg:p-3 p-2 transition-all duration-300 ${
