@@ -105,7 +105,7 @@ const sidebarItems = [
     label: "Video Consultation",
     icon: VideoIcon,
     visible: ["admin", "doctors", "staff", "lab", "pharmacy", "patient"],
-    href: "/video",
+    href: "https://clone-qp3d.vercel.app/",
   },
 ];
 
