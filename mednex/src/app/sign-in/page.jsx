@@ -33,21 +33,23 @@ export default function SignInForm() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10">
-      <h1 className="text-2xl font-bold mb-4">Sign In</h1>
-      <input
-        type="email"
-        className="w-full p-2 border rounded mb-4"
-        placeholder="Enter your email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <button
-        className="w-full bg-green-600 text-white p-2 rounded"
-        onClick={handleSignIn}
-      >
-        Sign In
-      </button>
+    <div className="w-screen h-screen flex items-center justify-center bg-gradient-to-r from-teal-200 to-green-main">
+      <div className="max-w-md mx-auto mt-10 bg-white p-4 rounded-lg">
+        <h1 className="text-2xl font-bold mb-4">Sign In</h1>
+        <input
+          type="email"
+          className="w-full p-2 border rounded mb-4"
+          placeholder="Enter your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <button
+          className="w-full bg-green-main text-white p-2 rounded"
+          onClick={handleSignIn}
+        >
+          Sign In
+        </button>
+      </div>
     </div>
   );
 }
