@@ -1,10 +1,9 @@
 // pages/index.js
 "use client";
 import React, { useState } from "react";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import { pdf } from "@react-pdf/renderer";
 import MyPDFDocument from "./MyPDFDocument";
 import { Input } from "@/components/ui/input";
-// import { medicationsData } from "@/lib/data";
 
 function MainComponent() {
   const medicationsData = [
@@ -17,6 +16,16 @@ function MainComponent() {
     { id: 7, name: "Levothyroxine" },
     { id: 8, name: "Amlodipine" },
   ];
+
+  const [vitals, setVitals] = useState({
+    bloodGlucose: "",
+    temperature: "",
+    bloodPressure: "",
+    weight: "",
+    spo2: "",
+    respiratoryRate: "",
+  });
+
   const [chiefComplaints, setChiefComplaints] = useState([
     { complaint: "", since: "", history: "" },
   ]);
@@ -85,7 +94,7 @@ function MainComponent() {
 
   // Handle suggestion click for Medications
   const handleMedicationSuggestionClick = (suggestion, index) => {
-    handleChange(setMedicationsData, index, "name", suggestion.name);
+    handleChange(setMedications, index, "name", suggestion.name);
     setMedicationSearchQuery("");
     setFilteredMedicationSuggestions([]);
   };
@@ -95,7 +104,7 @@ function MainComponent() {
     setMedicationSearchQuery(query);
 
     if (query) {
-      const suggestions = medications.filter((item) =>
+      const suggestions = medicationsData.filter((item) =>
         item.name.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredMedicationSuggestions(suggestions);
@@ -179,8 +188,112 @@ function MainComponent() {
     setFilteredSuggestions([]);
   };
 
+  const handleVitalChange = (field, value) => {
+    setVitals((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const handleGeneratePDF = async () => {
+    const doc = (
+      <MyPDFDocument
+        chiefComplaints={chiefComplaints}
+        diagnoses={diagnoses}
+        medications={medications}
+        examination={examination}
+        investigation={investigation}
+        vitals={vitals}
+      />
+    );
+
+    try {
+      const asPdf = pdf(doc);
+      const blob = await asPdf.toBlob();
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank");
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    }
+  };
+
   return (
-    <div className="mx-auto space-y-6 p-6 max-w-xl bg-white shadow-md rounded-lg">
+    <div className="mx-auto space-y-6 p-6  bg-white shadow-md rounded-lg">
+      {/* vitals  */}
+      <div className="p-4 border rounded-md">
+        <h3 className="font-bold text-lg mb-2 text-gray-800">Vitals</h3>
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
+          <div>
+            <label className="block text-gray-700 font-bold mb-2">
+              Blood Glucose
+            </label>
+            <input
+              type="text"
+              value={vitals.bloodGlucose}
+              onChange={(e) =>
+                handleVitalChange("bloodGlucose", e.target.value)
+              }
+              className="w-full border rounded p-2 mb-2"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-bold mb-2">
+              Temperature
+            </label>
+            <input
+              type="text"
+              value={vitals.temperature}
+              onChange={(e) => handleVitalChange("temperature", e.target.value)}
+              className="w-full border rounded p-2 mb-2"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-bold mb-2">
+              Blood Pressure
+            </label>
+            <input
+              type="text"
+              value={vitals.bloodPressure}
+              onChange={(e) =>
+                handleVitalChange("bloodPressure", e.target.value)
+              }
+              className="w-full border rounded p-2 mb-2"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-bold mb-2">Weight</label>
+            <input
+              type="text"
+              value={vitals.weight}
+              onChange={(e) => handleVitalChange("weight", e.target.value)}
+              className="w-full border rounded p-2 mb-2"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-bold mb-2">SpO2</label>
+            <input
+              type="text"
+              value={vitals.spo2}
+              onChange={(e) => handleVitalChange("spo2", e.target.value)}
+              className="w-full border rounded p-2 mb-2"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-bold mb-2">
+              Respiratory Rate
+            </label>
+            <input
+              type="text"
+              value={vitals.respiratoryRate}
+              onChange={(e) =>
+                handleVitalChange("respiratoryRate", e.target.value)
+              }
+              className="w-full border rounded p-2 mb-2"
+            />
+          </div>
+        </div>
+      </div>
+
       {/* Chief Complaints */}
       <div className="p-4 border rounded-md">
         <h3 className="font-bold text-lg mb-2 text-gray-800">
@@ -284,8 +397,7 @@ function MainComponent() {
           />
         </div>
       </div>
-
-      {/* Medication  */}
+      {/* Diagnoses */}
       <div className="p-4 border rounded-md">
         <h3 className="font-bold text-lg mb-2 text-gray-800">Diagnoses</h3>
         {diagnoses.map((diagnosis, index) => (
@@ -293,11 +405,11 @@ function MainComponent() {
             <Input
               type="text"
               placeholder="Search diagnoses..."
-              className="border-2 p-2 mb-2 w-full"
+              className="border-2 p-2 w-full"
               value={diagnosisSearchQuery}
               onChange={handleDiagnosisSearchChange}
             />
-            {/* Display suggestions for Diagnosis */}
+            {/* Display suggestions for Diagnoses */}
             {filteredDiagnosisSuggestions.length > 0 && (
               <ul className="bg-white border border-gray-200 rounded shadow-md mt-1 max-h-40 overflow-y-auto">
                 {filteredDiagnosisSuggestions.map((suggestion) => (
@@ -313,7 +425,6 @@ function MainComponent() {
                 ))}
               </ul>
             )}
-            {/* Diagnosis fields */}
             <input
               type="text"
               placeholder="Diagnosis"
@@ -350,11 +461,10 @@ function MainComponent() {
           Add Diagnosis
         </button>
       </div>
-
       {/* Medications */}
       <div className="p-4 border rounded-md">
         <h3 className="font-bold text-lg mb-2 text-gray-800">Medications</h3>
-        {medicationsData.map((medication, index) => (
+        {medications.map((medication, index) => (
           <div key={index} className="mb-4">
             <Input
               type="text"
@@ -379,14 +489,13 @@ function MainComponent() {
                 ))}
               </ul>
             )}
-            {/* Medication fields */}
             <input
               type="text"
               placeholder="Name"
               value={medication.name}
               className="w-full border rounded p-2 mb-2"
               onChange={(e) =>
-                handleChange(setMedicationsData, index, "name", e.target.value)
+                handleChange(setMedications, index, "name", e.target.value)
               }
             />
             <input
@@ -395,12 +504,7 @@ function MainComponent() {
               value={medication.frequency}
               className="w-full border rounded p-2 mb-2"
               onChange={(e) =>
-                handleChange(
-                  setMedicationsData,
-                  index,
-                  "frequency",
-                  e.target.value
-                )
+                handleChange(setMedications, index, "frequency", e.target.value)
               }
             />
             <input
@@ -409,12 +513,7 @@ function MainComponent() {
               value={medication.duration}
               className="w-full border rounded p-2 mb-2"
               onChange={(e) =>
-                handleChange(
-                  setMedicationsData,
-                  index,
-                  "duration",
-                  e.target.value
-                )
+                handleChange(setMedications, index, "duration", e.target.value)
               }
             />
             <input
@@ -423,7 +522,7 @@ function MainComponent() {
               value={medication.route}
               className="w-full border rounded p-2 mb-2"
               onChange={(e) =>
-                handleChange(setMedicationsData, index, "route", e.target.value)
+                handleChange(setMedications, index, "route", e.target.value)
               }
             />
             <input
@@ -433,7 +532,7 @@ function MainComponent() {
               className="w-full border rounded p-2 mb-2"
               onChange={(e) =>
                 handleChange(
-                  setMedicationsData,
+                  setMedications,
                   index,
                   "instructions",
                   e.target.value
@@ -449,31 +548,15 @@ function MainComponent() {
           Add Medication
         </button>
       </div>
-
-      {/* Generate PDF Button */}
-      <div className="flex justify-end mt-6">
-        <PDFDownloadLink
-          document={
-            <MyPDFDocument
-              chiefComplaints={chiefComplaints}
-              diagnoses={diagnoses}
-              medications={medications}
-              examination={examination}
-              investigation={investigation}
-            />
-          }
-          fileName="medical_report.pdf"
+      {/* Generate PDF */}
+      <div className="text-center">
+        <button
+          type="button"
+          onClick={handleGeneratePDF}
+          className="bg-blue-500 text-white py-2 px-4 rounded"
         >
-          {({ blob, url, loading, error }) =>
-            loading ? (
-              "Generating PDF..."
-            ) : (
-              <button className="bg-green-500 text-white py-2 px-6 rounded-md">
-                Download PDF
-              </button>
-            )
-          }
-        </PDFDownloadLink>
+          Generate PDF
+        </button>
       </div>
     </div>
   );
